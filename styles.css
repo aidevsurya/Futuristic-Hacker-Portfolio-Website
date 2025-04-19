@@ -1,0 +1,184 @@
+body {
+  background: 
+        linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+        url("matrix.gif") no-repeat center center/cover;
+  color: cyan;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+}
+.box {
+  border: 2px solid cyan;
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: 0 0 10px cyan;
+  position: absolute;
+}
+.terminal {
+  padding: 20px;
+  text-align: center;
+  width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.text {
+  font-size: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid cyan;
+  display: inline-block;
+  animation: blinkCursor 0.8s infinite;
+}
+@keyframes blinkCursor {
+  50% { border-color: transparent; }
+}
+.loading-bar {
+  width: 100%;
+  height: 5px;
+  background: rgba(0, 255, 255, 0.2);
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  transition: opacity 1s ease-in-out;
+}
+.loading-progress {
+  width: 0;
+  height: 100%;
+  background: cyan;
+  animation: loading 2s linear forwards;
+}
+@keyframes loading {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.interface-box {
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: width 2s, height 2s, opacity 2s ease-in-out;
+}
+@keyframes expandBox {
+  0% { width: 0; height: 0; opacity: 1; }
+  50% { width: 2px; height: 200px; }
+  100% { width: 98vw; height: 98vh; opacity: 1; }
+}
+
+/* Sidebar */
+.sidebar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 60px;
+  height: 90%;
+  background-color: transparent;
+  display: flex;
+  border: 2px solid cyan;
+  box-shadow: 0 0 10px cyan;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.menu-item {
+  color: cyan;
+  text-align: center;
+  margin: 20px 0;
+  cursor: pointer;
+}
+.menu-item i {
+  font-size: 24px;
+}
+.menu-item-text {
+  font-size: 12px;
+  display: block;
+}
+.menu-item:hover {
+  background-color: rgba(0, 255, 255, 0.2);
+  border-radius: 5px;
+  padding: 5px;
+  transition: background-color 0.3s ease;
+}
+/* Name & Typing Effect */
+/* Name Heading */
+.name-container {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 0;  /* Initially hidden */
+  transition: top 2s ease, font-size 1s ease; /* Smooth transition for top and font size */
+}
+
+.name-title {
+  font-size: 60px; /* Initial size */
+  font-weight: bold;
+  text-shadow: 0 0 10px cyan;
+  transition: font-size 1s ease; /* Transition for font size */
+}
+
+.typing-text {
+  font-size: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid cyan;
+  display: inline-block;
+  animation: blinkCursor 0.8s infinite;
+}
+
+/* --------------------------------------- */
+
+/* Content Box */
+.content-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  border: 2px solid cyan;
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: 0 0 10px cyan;
+  transition: width 2s, height 2s, opacity 2s ease-in-out;
+}
+
+@keyframes expandContentBox {
+  0% { width: 0; height: 0; opacity: 0; }
+  50% { width: 2px; height: 150px; opacity: 1; }
+  100% {margin-left: 20px; width: 80vw; height: 90vh; opacity: 1; }
+}
+
+.img-box {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  border: 2px solid cyan;
+  background: url("mypic.jpg");
+  background-size: cover;
+  box-shadow: 0 0 10px cyan;
+  transition: width 2s, height 2s, opacity 2s ease-in-out;
+}
+
+@keyframes expandImgBox {
+  0% { width: 0; height: 0; opacity: 0; }
+  50% { width: 2px; height: 100px; opacity: 1; }
+  100% {margin: 10px; width: 250px; height: 250px; opacity: 1; }
+}

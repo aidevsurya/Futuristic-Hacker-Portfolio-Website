@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Initializing</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- For icons -->
+</head>
+<body>
+    <div class="box terminal" id="terminal">
+        <span id="init-text" class="text"></span>
+        <div class="loading-bar" id="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+    <div class="box interface-box" id="interface-box">
+        <!-- Left sidebar with menu items -->
+        <!-- Sidebar Box (New) -->
+        <div class="sidebar-container">
+            <div class="sidebar" id="sidebar">
+                <a href="about.html"><div class="menu-item"><i class="fas fa-user"></i><span class="menu-item-text">About</span></div></a>
+                <a href="services.html"><div class="menu-item"><i class="fas fa-cogs"></i><span class="menu-item-text">Services</span></div></a>
+                <a href="projects.html"><div class="menu-item"><i class="fas fa-project-diagram"></i><span class="menu-item-text">Projects</span></div></a>
+                <a href="Youtube.html"><div class="menu-item"><i class="fab fa-youtube"></i><span class="menu-item-text">YouTube</span></div></a>
+                <a href="Github.html"><div class="menu-item"><i class="fab fa-github"></i><span class="menu-item-text">GitHub</span></div></a>
+            </div>
+        </div>
+
+        <!-- Name & Typing Effect -->
+        <div class="name-container" id="name-container">
+            <div class="name-title">Suryansh Sharma</div>
+            <div id="typing-text" class="typing-text"></div>
+        </div>        
+
+        <!-- Content Box (Expands Later) -->
+        <div class="box content-box" id="content-box">
+            <p style="padding: 20px; text-align: center;">Welcome to my Portfolio!</p>
+        </div>
+
+        <div class="box img-box" id="img-box">
+            <p style="padding: 20px; text-align: center;"></p>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

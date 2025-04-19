@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Initializing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- For icons -->
+    <style>
+        body {
+            background-color: black;
+            color: cyan;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .box {
+            border: 2px solid cyan;
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 10px cyan;
+            position: absolute;
+        }
+        .terminal {
+            padding: 20px;
+            text-align: center;
+            width: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .text {
+            font-size: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid cyan;
+            display: inline-block;
+            animation: blinkCursor 0.8s infinite;
+        }
+        @keyframes blinkCursor {
+            50% { border-color: transparent; }
+        }
+        .loading-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(0, 255, 255, 0.2);
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .loading-progress {
+            width: 0;
+            height: 100%;
+            background: cyan;
+            animation: loading 2s linear forwards;
+        }
+        @keyframes loading {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .interface-box {
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: width 2s, height 2s, opacity 2s ease-in-out;
+        }
+        @keyframes expandBox {
+            0% { width: 0; height: 0; opacity: 1; }
+            50% { width: 2px; height: 200px; }
+            100% { width: 98vw; height: 98vh; opacity: 1; }
+        }
+        
+        /* Sidebar menu styles */
+        .sidebar {
+            position: absolute;
+            top: 0;
+            left: 20px; /* Margin from left */
+            width: 60px;
+            height: 100%;
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 20px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .menu-item {
+            color: cyan;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .menu-item i {
+            font-size: 24px;
+        }
+
+        .menu-item-text {
+            font-size: 12px;
+            display: block;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(0, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Name & Typing Effect */
+        .name-container {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 1s ease-in-out;
+        }
+
+        .name-title {
+            font-size: 40px;
+            font-weight: bold;
+            text-shadow: 0 0 10px cyan;
+        }
+
+        .typing-text {
+            font-size: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid cyan;
+            display: inline-block;
+            animation: blinkCursor 0.8s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="box terminal" id="terminal">
+        <span id="init-text" class="text"></span>
+        <div class="loading-bar" id="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+    <div class="box interface-box" id="interface-box">
+        <!-- Left sidebar with menu items -->
+        <div class="sidebar" id="sidebar">
+            <div class="menu-item">
+                <i class="fas fa-user"></i>
+                <span class="menu-item-text">About</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-cogs"></i>
+                <span class="menu-item-text">Services</span>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-project-diagram"></i>
+                <span class="menu-item-text">Projects</span>
+            </div>
+            <div class="menu-item">
+                <i class="fab fa-youtube"></i>
+                <span class="menu-item-text">Youtube</span>
+            </div>
+            <div class="menu-item">
+                <i class="fab fa-github"></i>
+                <span class="menu-item-text">Github</span>
+            </div>
+        </div>
+
+        <!-- Name & Typing Effect -->
+        <div class="name-container" id="name-container">
+            <div class="name-title">Suryansh Sharma</div>
+            <div id="typing-text" class="typing-text"></div>
+        </div>
+    </div>
+
+    <script>
+        // Terminal Typewriter Effect
+        const text = "Initializing the system...";
+        let i = 0;
+        function typeEffect() {
+            if (i < text.length) {
+                document.getElementById("init-text").textContent += text.charAt(i);
+                i++;
+                setTimeout(typeEffect, 100);
+            } else {
+                setTimeout(() => {
+                    document.getElementById("loading-bar").style.opacity = "0";
+                    setTimeout(() => {
+                        document.getElementById("terminal").style.opacity = "0";
+                        setTimeout(() => {
+                            document.getElementById("terminal").style.display = "none";
+                            document.getElementById("interface-box").style.animation = "expandBox 2s forwards";
+                            setTimeout(() => {
+                                document.getElementById("sidebar").style.opacity = "1"; // Fade in sidebar
+                                document.getElementById("name-container").style.opacity = "1"; // Fade in name
+                                startTypingEffect(); // Start typing effect
+                            }, 2000);
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }
+        }
+        setTimeout(typeEffect, 500);
+
+        // Typing Effect for Roles
+        const roles = ["AI Developer", "Robotics Enthusiast", "Music Producer and Singer"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let typingText = document.getElementById("typing-text");
+
+        function typeRole() {
+            if (charIndex < roles[roleIndex].length) {
+                typingText.textContent += roles[roleIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeRole, 100);
+            } else {
+                setTimeout(eraseRole, 2000);
+            }
+        }
+
+        function eraseRole() {
+            if (charIndex > 0) {
+                typingText.textContent = roles[roleIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(eraseRole, 50);
+            } else {
+                roleIndex = (roleIndex + 1) % roles.length;
+                setTimeout(typeRole, 500);
+            }
+        }
+
+        function startTypingEffect() {
+            setTimeout(typeRole, 500);
+        }
+    </script>
+</body>
+</html>
